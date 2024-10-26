@@ -34,27 +34,6 @@ const rules: Record<string, (...args: string[]) => SeatbeltConfigValue> = {
   ],
 };
 
-function denoDir(): string {
-  const command = new Deno.Command(Deno.execPath(), {
-    args: ["info"],
-    stdout: "piped",
-  });
-
-  const output = command.outputSync();
-
-  const info = new TextDecoder().decode(output.stdout);
-
-  const lines = info.split("\n");
-
-  for (const line of lines) {
-    if (line.includes("DENO_DIR")) {
-      return line.split(" ")[2]?.trim();
-    }
-  }
-
-  throw new Error("DENO_DIR not found");
-}
-
 export async function run(args: string[]) {
   const execPath = Deno.execPath();
 
@@ -96,6 +75,27 @@ export function* createRules(args: string[]) {
       yield rules[key](...values);
     }
   }
+}
+
+function denoDir(): string {
+  const command = new Deno.Command(Deno.execPath(), {
+    args: ["info"],
+    stdout: "piped",
+  });
+
+  const output = command.outputSync();
+
+  const info = new TextDecoder().decode(output.stdout);
+
+  const lines = info.split("\n");
+
+  for (const line of lines) {
+    if (line.includes("DENO_DIR")) {
+      return line.split(" ")[2]?.trim();
+    }
+  }
+
+  throw new Error("DENO_DIR not found");
 }
 
 if (import.meta.main) {
