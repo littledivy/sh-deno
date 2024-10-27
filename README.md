@@ -23,4 +23,17 @@ initialize(void)
 }
 ```
 
+## Running without sh-deno
+
+Pass `--emit-config` to export the sandbox (Apple seatbelt) configuration that
+can be used without `sh-deno`.
+
+```sh
+sh-deno --emit-config \
+  --allow-read=. --allow-ffi > sandbox.sb
+
+sandbox-exec -f sandbox.sb \
+  deno run --allow-read=. --allow-ffi main.ts
+```
+
 > **Note**: This project is in early development stage. Please use with caution.

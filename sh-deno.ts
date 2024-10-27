@@ -55,7 +55,10 @@ export async function run(args: string[]) {
     ]),
   ]);
 
-  console.log(config);
+  if (args.includes("--emit-profile")) {
+    console.log(config);
+    return;
+  }
 
   const command = new Deno.Command("sandbox-exec", {
     args: ["-p", config, "deno", ...args],
