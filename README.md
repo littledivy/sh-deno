@@ -25,11 +25,11 @@ initialize(void)
 
 ## Running without sh-deno
 
-Pass `--emit-config` to export the sandbox (Apple seatbelt) configuration that
+Pass `--emit-profile` to export the sandbox (Apple seatbelt) profile that
 can be used without `sh-deno`.
 
 ```sh
-sh-deno --emit-config \
+sh-deno --emit-profile \
   --allow-read=. --allow-ffi > sandbox.sb
 
 sandbox-exec -f sandbox.sb \
